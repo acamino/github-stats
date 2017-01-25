@@ -10,14 +10,15 @@ import Data.List
 import Data.Ord
 import GHC.Generics
 import Network.HTTP.Req
+import qualified Data.Text as T
 
 instance MonadHttp IO where
   handleHttpException = throwIO
 
-type Language = String
+type Language = T.Text
 data Repository =
-  Repository { language :: Maybe Language }
-             deriving (Show, Generic)
+  Repository { language :: Maybe Language
+             } deriving (Show, Generic)
 
 instance FromJSON Repository
 
@@ -28,11 +29,10 @@ main = do
     jsonResponse
     (header "User-Agent" "ac")
   let repos = responseBody r :: Maybe [Repository]
-      langs = (getLangs . getRepos) repos
-      groupedLangs = (group . sort . filter (/= "")) langs
+      langs = getLangs . getRepos $ repos
+      groupedLangs = group . sort . filter (/= "") $ langs
       xs = sortBy (comparing (Down . snd)) $ map (\xs -> (head xs, length xs)) groupedLangs
-  print xs
-  mapM_ putStrLn (histogram xs) 
+  mapM_ putStrLn $ histogram xs
 
 getRepos :: Maybe [Repository] -> [Repository]
 getRepos (Just r) = r
@@ -43,8 +43,10 @@ getLangs repos = map getLang repos
 
 getLang :: Repository -> Language
 getLang (Repository {language = (Just lang)}) = lang  
-getLang (Repository {language = Nothing})     = ""
+getLang (Repository {language = Nothing})     = T.pack ""
 
 histogram :: [(Language, Int)] -> [String]
-histogram = map (\x -> bar (snd x) ++ " " ++ fst x ++ " " ++ show (snd x))
-  where bar n = take n $ repeat '#'
+histogram =
+  let bar (language, quantity) = bar' quantity ++ " " ++ T.unpack language ++ " " ++ show quantity
+      bar' n = take n $ repeat '#'
+  in map (\x -> bar x)
