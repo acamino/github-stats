@@ -7,6 +7,7 @@ import Control.Exception (throwIO)
 import Control.Monad
 import Data.Aeson
 import Data.List
+import Data.Maybe
 import Data.Ord
 import GHC.Generics
 import Network.HTTP.Req
@@ -29,21 +30,18 @@ main = do
     jsonResponse
     (header "User-Agent" "ac")
   let repos = responseBody r :: Maybe [Repository]
-      langs = getLangs . getRepos $ repos
-      groupedLangs = group . sort . filter (/= "") $ langs
-      xs = sortBy (comparing (Down . snd)) $ map (\xs -> (head xs, length xs)) groupedLangs
-  mapM_ putStrLn $ histogram xs
+      langs = getLanguages repos
+      groupedLangs = group . sort $ langs
+      stats = sortBy (comparing (Down . snd)) $ map (\xs -> (head xs, length xs)) groupedLangs
+  mapM_ putStrLn $ histogram stats
 
-getRepos :: Maybe [Repository] -> [Repository]
-getRepos (Just r) = r
-getRepos Nothing  = []
-
-getLangs :: [Repository] -> [Language]
-getLangs repos = map getLang repos
-
-getLang :: Repository -> Language
-getLang (Repository {language = (Just lang)}) = lang  
-getLang (Repository {language = Nothing})     = T.pack ""
+getLanguages :: Maybe [Repository] -> [Language]
+getLanguages repos =
+  case repos of
+    Nothing    -> []
+    Just repos ->
+      catMaybes . map (\repo -> getLanguage repo) $ repos
+      where getLanguage (Repository language) = language
 
 histogram :: [(Language, Int)] -> [String]
 histogram =
