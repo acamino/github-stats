@@ -29,10 +29,10 @@ main = do
     NoReqBody
     jsonResponse
     (header "User-Agent" "ac")
-  let repos = responseBody r :: Maybe [Repository]
-      langs = getLanguages repos
+  let repos        = responseBody r :: Maybe [Repository]
+      langs        = getLanguages repos
       groupedLangs = group . sort $ langs
-      stats = sortBy (comparing (Down . snd)) $ map (\xs -> (head xs, length xs)) groupedLangs
+      stats        = getStats groupedLangs
   mapM_ putStrLn $ histogram stats
 
 getLanguages :: Maybe [Repository] -> [Language]
@@ -42,6 +42,11 @@ getLanguages repos =
     Just repos ->
       catMaybes . map (\repo -> getLanguage repo) $ repos
       where getLanguage (Repository language) = language
+
+getStats :: [[Language]] -> [(Language, Int)]
+getStats groupedLangs =
+  let stats = map (\ls -> (head ls, length ls)) groupedLangs
+  in sortBy (comparing (Down . snd)) stats
 
 histogram :: [(Language, Int)] -> [String]
 histogram =
