@@ -44,8 +44,7 @@ getLanguages repos =
 getStats :: [[Language]] -> [(Language, Int)]
 getStats groupedLangs =
   let stats = map (\ls -> (head ls, length ls)) groupedLangs
-  in sortBy (comparing (Down . snd)) stats
-
+  in sortBy (comparing $ Down . snd) stats
 
 histogram :: [(Language, Int)] -> [T.Text]
 histogram =
