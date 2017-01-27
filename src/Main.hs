@@ -18,9 +18,8 @@ instance MonadHttp IO where
   handleHttpException = throwIO
 
 type Language = T.Text
-data Repository =
-  Repository { language :: Maybe Language
-             } deriving (Show, Generic)
+data Repository = Repository { language :: Maybe Language
+                             } deriving (Show, Generic)
 
 instance FromJSON Repository
 
