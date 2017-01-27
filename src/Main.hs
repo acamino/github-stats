@@ -4,11 +4,11 @@
 module Main where
 
 import Control.Exception (throwIO)
-import Control.Monad
-import Data.Aeson
-import Data.List
-import Data.Maybe
-import Data.Ord
+import Data.Aeson (FromJSON)
+import Data.List (group, sort, sortBy)
+import Data.Maybe (catMaybes)
+import Data.Monoid ((<>))
+import Data.Ord (Down(..), comparing)
 import GHC.Generics
 import Network.HTTP.Req
 import qualified Data.Text as T
