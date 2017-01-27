@@ -12,6 +12,7 @@ import Data.Ord
 import GHC.Generics
 import Network.HTTP.Req
 import qualified Data.Text as T
+import qualified Data.Text.IO as T
 
 instance MonadHttp IO where
   handleHttpException = throwIO
@@ -33,7 +34,7 @@ main = do
       langs        = getLanguages repos
       groupedLangs = group . sort $ langs
       stats        = getStats groupedLangs
-  mapM_ putStrLn $ histogram stats
+  mapM_ T.putStrLn $ histogram stats
 
 getLanguages :: Maybe [Repository] -> [Language]
 getLanguages repos =
@@ -46,8 +47,12 @@ getStats groupedLangs =
   let stats = map (\ls -> (head ls, length ls)) groupedLangs
   in sortBy (comparing (Down . snd)) stats
 
-histogram :: [(Language, Int)] -> [String]
+
+histogram :: [(Language, Int)] -> [T.Text]
 histogram =
-  let bar (language, quantity) = bar' quantity ++ " " ++ T.unpack language ++ " " ++ show quantity
-      bar' n = take n $ repeat '#'
-  in map (\x -> bar x)
+  let bar (language, quantity) = T.pack (replicate quantity '#')
+                              <> T.pack " "
+                              <> language
+                              <> T.pack " "
+                              <> T.pack (show quantity)
+  in map bar
