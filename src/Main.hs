@@ -39,9 +39,7 @@ getLanguages :: Maybe [Repository] -> [Language]
 getLanguages repos =
   case repos of
     Nothing    -> []
-    Just repos ->
-      catMaybes . map (\repo -> getLanguage repo) $ repos
-      where getLanguage (Repository language) = language
+    Just repos -> catMaybes . map language $ repos
 
 getStats :: [[Language]] -> [(Language, Int)]
 getStats groupedLangs =
