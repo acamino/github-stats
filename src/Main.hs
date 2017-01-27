@@ -28,7 +28,7 @@ main = do
     (https "api.github.com" /: "orgs" /: "stackbuilders" /: "repos")
     NoReqBody
     jsonResponse
-    (header "User-Agent" "ac")
+    (header "User-Agent" "ac" <> "per_page" =: T.pack "100")
   let repos        = responseBody r :: Maybe [Repository]
       langs        = getLanguages repos
       groupedLangs = group . sort $ langs
