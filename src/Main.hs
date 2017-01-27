@@ -50,8 +50,8 @@ getStats groupedLangs =
 histogram :: [(Language, Int)] -> [T.Text]
 histogram =
   let bar (language, quantity) = T.pack (replicate quantity '#')
-                              <> T.pack " "
+                              <> " "
                               <> language
-                              <> T.pack " "
+                              <> " "
                               <> T.pack (show quantity)
   in map bar
