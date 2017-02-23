@@ -6,6 +6,7 @@
 </a>
 
 # GitHub Stats
+[![Build Status](https://travis-ci.org/acamino/ghs.svg?branch=master)](https://travis-ci.org/acamino/ghs)
 
 This is a pet project to get some stats from GitHub repositories.
 
