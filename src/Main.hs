@@ -29,22 +29,22 @@ instance FromJSON Repository where
     return Repository {..}
 
 main = do
-  repos <- fetchRepositories "stackbuilders"
+  repos <- fetchRepos "stackbuilders"
   let langs        = mapMaybe repoLanguage repos
       groupedLangs = group . sort $ langs
       stats        = getStats groupedLangs
   mapM_ T.putStrLn $ histogram stats
 
-fetchRepositories :: MonadHttp m
+fetchRepos :: MonadHttp m
   => T.Text            -- ^ Github organization name
   -> m [Repository]
-fetchRepositories orgName = do
-  let gitHubApi           = https "api.github.com"
-      listRepositoriesUrl = gitHubApi /: "orgs" /: orgName /: "repos"
+fetchRepos orgName = do
+  let gitHubApi    = https "api.github.com"
+      listReposUrl = gitHubApi /: "orgs" /: orgName /: "repos"
       params =
         "per_page" =: (100 :: Int) <>
         header "User-Agent" "ghs"
-  repos <- req GET listRepositoriesUrl NoReqBody jsonResponse params
+  repos <- req GET listReposUrl NoReqBody jsonResponse params
   return (responseBody repos :: [Repository])
 
 getStats :: [[Language]] -> [(Language, Int)]
