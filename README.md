@@ -15,8 +15,8 @@ This is a pet project to get some stats from GitHub repositories.
 1. First clone this repository and `cd` into it.
 
    ```bash
-   $ git clone git://github.com/acamino/gh-stats.git
-   $ cd gh-stats
+   $ git clone git://github.com/acamino/ghs.git
+   $ cd ghs
    ```
 
 1. Install [Stack](https://docs.haskellstack.org/en/stable/README/).
