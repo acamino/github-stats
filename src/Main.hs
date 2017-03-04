@@ -1,11 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE DeriveGeneric     #-}
+{-# LANGUAGE RecordWildCards   #-}
 
 module Main where
 
 import Control.Arrow ((&&&))
 import Control.Exception (throwIO)
-import Data.Aeson (FromJSON)
+import Data.Aeson
 import Data.List (group, sort, sortBy)
 import Data.Maybe (mapMaybe)
 import Data.Monoid ((<>))
@@ -19,14 +19,18 @@ instance MonadHttp IO where
   handleHttpException = throwIO
 
 type Language = T.Text
-data Repository = Repository { language :: Maybe Language
-                             } deriving (Generic)
+data Repository = Repository
+  { repoLanguage :: Maybe Language
+  }
 
-instance FromJSON Repository
+instance FromJSON Repository where
+  parseJSON = withObject "repo in org" $ \o -> do
+    repoLanguage <- o .: "language"
+    return Repository {..}
 
 main = do
   repos <- fetchRepositories "stackbuilders"
-  let langs        = mapMaybe language repos
+  let langs        = mapMaybe repoLanguage repos
       groupedLangs = group . sort $ langs
       stats        = getStats groupedLangs
   mapM_ T.putStrLn $ histogram stats
