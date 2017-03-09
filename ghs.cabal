@@ -1,23 +1,64 @@
 name:                ghs
-version:             0.1.0.0
-synopsis:            Simple project template from stack
+version:             0.0.1.0
+synopsis:            Fetch stats form GitHub organization
 description:         Please see README.md
 homepage:            https://github.com/acamino/ghs#readme
 license:             BSD3
 license-file:        LICENSE
-author:              Agustin Camino
-maintainer:          agustin.camino@gmail.com
-copyright:           Copyright (c) 2016 Agustin Camino
-category:            Parsers
-build-type:          Simple
+author:              Agustin Camino <agustin.camino@gmail.com>
+maintainer:          Agustin Camino <agustin.camino@gmail.com>
+stability:           Experimental
+copyright:           Copyright (c) 2017 Agustin Camino
+category:            Console
+Build-type:          Simple
+Homepage:            https://github.com/acamino/ghs
+Bug-reports:         https://github.com/acamino/ghs/issues
 cabal-version:       >=1.10
-extra-source-files:  README.md
+extra-doc-files:     README.md
+
+source-repository head
+  type:               git
+  location:           https://github.com/acamino/ghs.git
+
+library
+  hs-source-dirs:      src
+  exposed-modules:     Console.GitHubStats
+                     , Console.GitHubStats.Stats
+                     , Console.GitHubStats.Types
+  build-depends:       base                   >= 4.7   && < 5.0
+                     , aeson                  >= 0.9   && < 1.1
+                     , req                    >= 0.2   && < 0.3
+                     , text                   >= 1.2   && < 1.3
+
+  ghc-options:         -Wall -Werror
+  default-language:    Haskell2010
 
 executable ghs
-  hs-source-dirs:      src
+  hs-source-dirs:      app
   main-is:             Main.hs
+  build-depends:       base                   >= 4.7   && < 5.0
+                     , aeson                  >= 0.9   && < 1.1
+                     , ghs
+                     , optparse-applicative   >= 0.11  && < 0.14
+                     , req                    >= 0.2   && < 0.3
+                     , text                   >= 1.2   && < 1.3
+
+  ghc-options:         -Wall -Werror
   default-language:    Haskell2010
-  build-depends:       base >= 4.7 && < 5
-                     , aeson
-                     , req
-                     , text
+
+test-suite ghs-test
+  main-is:             Spec.hs
+  type:                exitcode-stdio-1.0
+  hs-source-dirs:      spec
+  other-modules:       Console.GitHubStats.StatsSpec
+
+  build-depends:       base                   >= 4.7   && < 5.0
+                     , aeson                  >= 0.9   && < 1.1
+                     , ghs
+                     , hspec
+                     , optparse-applicative   >= 0.11  && < 0.14
+                     , req                    >= 0.2   && < 0.3
+                     , text                   >= 1.2   && < 1.3
+
+  ghc-options:         -Wall -Werror
+  default-language:    Haskell2010

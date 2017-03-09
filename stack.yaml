@@ -1,9 +1,1 @@
-resolver: lts-8.2
-
-packages:
-- '.'
-
-extra-deps:
-  - req-0.2.0
-  - http-client-0.5.5
-  - http-client-tls-0.3.3
+resolver: lts-8.3
