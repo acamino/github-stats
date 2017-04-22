@@ -17,11 +17,11 @@ histogram :: [Repository] -> [T.Text]
 histogram repos =
   let groupedLangs             = getGroupedLangs repos
       stats                    = getStats groupedLangs
-      bar (language, quantity) = T.pack (replicate quantity '#') <>
-                                 " "                             <>
-                                 language                        <>
-                                 " "                             <>
-                                 T.pack (show quantity)
+      bar (language, quantity) = T.replicate quantity "#"
+                              <> " "
+                              <> language
+                              <> " "
+                              <> T.pack (show quantity)
   in map bar stats
 
 getGroupedLangs :: [Repository] -> [[Language]]
