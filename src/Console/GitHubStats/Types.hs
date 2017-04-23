@@ -8,3 +8,7 @@ type Language = T.Text
 data Repository = Repository
   { repoLanguage :: Maybe Language
   }
+
+data Organization = Organization
+  { orgPublicRepos :: Maybe Integer
+  }

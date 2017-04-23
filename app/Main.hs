@@ -34,7 +34,7 @@ instance MonadHttp IO where
 main :: IO ()
 main = do
   Options{..} <- execParser opts
-  repos <- fetchRepos $ T.pack optOrganization
+  repos <- fetchRepos (T.pack optOrganization)
   mapM_ T.putStrLn $ histogram repos
   where
     opts = info (helper <*> options)
