@@ -38,11 +38,12 @@ upcoming example:
 
 ## Local Development
 
-1. First clone this repository and `cd` into it.
+1. Fork the project [on GitHub](https://github.com/acamino/github-stats) and clone your fork locally.
 
    ```bash
-   $ git clone git://github.com/acamino/github-stats.git
+   $ git clone git://github.com/username/github-stats.git
    $ cd github-stats
+   $ git remote add upstream https://github.com/acamino/github-stats.git
    ```
 
 1. Install [Stack](https://docs.haskellstack.org/en/stable/README/).
@@ -62,5 +63,5 @@ upcoming example:
 ## Licence
 
 The code in this repository is licensed under the terms of the
-[MIT License](http://www.opensource.org/licenses/mit-license.html).
+[MIT License](http://www.opensource.org/licenses/mit-license.html).  
 Please see the [LICENSE](LICENSE) file for details.
