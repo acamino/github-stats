@@ -12,6 +12,7 @@ type Language = T.Text
 data Repository = Repository
   { repoLanguage :: Maybe Language
   }
+  deriving (Eq, Show)
 
 instance FromJSON Repository where
   parseJSON = withObject "repo in org" $ \o -> do
@@ -21,6 +22,7 @@ instance FromJSON Repository where
 data Organization = Organization
   { orgPublicRepos :: Maybe Natural
   }
+  deriving (Eq, Show)
 
 instance FromJSON Organization where
   parseJSON = withObject "organization" $ \o -> do

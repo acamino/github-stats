@@ -23,7 +23,7 @@ spec =
                                  , "## Ruby 2"
                                  , "# PureScript 1"
                                  ]
-    it "discards repositories without language" $ do
+    it "discards repositories without a language" $ do
       let repos =
             [ Repository { repoLanguage = Nothing }
             , Repository { repoLanguage = Just "Haskell" }

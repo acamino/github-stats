@@ -19,12 +19,12 @@ fetchRepos :: MonadHttp m
   -> m [Repository]
 fetchRepos orgName = do
   numberOfRepos <- fetchNumberOfRepos orgName
-  let n     = numberOfRepos `div` perPage
-      pages = if numberOfRepos `mod` perPage == 0
-                 then n
-                 else n + 1
+  let pages = countPages numberOfRepos
   repos <- forM [1..pages] $ fetchReposByPage orgName
   return $ concat repos
+  where
+    countPages numberOfRepos = ceiling $ toFloat numberOfRepos / toFloat perPage
+    toFloat = fromIntegral :: (Natural -> Float)
 
 
 fetchReposByPage :: MonadHttp m
