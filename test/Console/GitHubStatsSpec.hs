@@ -22,6 +22,6 @@ spec =
         repository `shouldSatisfy` isJust
 
     context "when the organization does not extist" $
-      it "fetches a repository" $ do
+      it "throws an exception" $ do
         let action = fetchRepos "stackbuilders-bf39447aa673"
         action `shouldThrow` (const True :: Selector HttpException)
