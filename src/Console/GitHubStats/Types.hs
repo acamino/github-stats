@@ -4,7 +4,8 @@
 module Console.GitHubStats.Types where
 
 import           Data.Aeson
-import qualified Data.Text  as T
+import qualified Data.Text       as T
+import           Numeric.Natural
 
 type Language = T.Text
 
@@ -18,7 +19,7 @@ instance FromJSON Repository where
     return Repository{..}
 
 data Organization = Organization
-  { orgPublicRepos :: Maybe Integer
+  { orgPublicRepos :: Maybe Natural
   }
 
 instance FromJSON Organization where

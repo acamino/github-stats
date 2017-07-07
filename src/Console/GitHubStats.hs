@@ -10,6 +10,7 @@ import           Data.Maybe
 import           Data.Monoid
 import qualified Data.Text                 as T
 import           Network.HTTP.Req
+import           Numeric.Natural
 
 import           Console.GitHubStats.Types
 
@@ -28,7 +29,7 @@ fetchRepos orgName = do
 
 fetchReposByPage :: MonadHttp m
   => T.Text
-  -> Integer
+  -> Natural
   -> m [Repository]
 fetchReposByPage orgName page = do
   let listReposUrl = gitHubApiUrl /: "orgs" /: orgName /: "repos"
@@ -41,7 +42,7 @@ fetchReposByPage orgName page = do
 
 fetchNumberOfRepos :: MonadHttp m
   => T.Text
-  -> m Integer
+  -> m Natural
 fetchNumberOfRepos orgName = do
   let listReposUrl = gitHubApiUrl /: "orgs" /: orgName
       params       = header "User-Agent" "github-stats"
@@ -52,6 +53,5 @@ fetchNumberOfRepos orgName = do
 gitHubApiUrl :: Url 'Https
 gitHubApiUrl = https "api.github.com"
 
-
-perPage :: Integer
+perPage :: Natural
 perPage = 100
