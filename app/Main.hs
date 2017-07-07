@@ -4,15 +4,15 @@
 
 module Main (main) where
 
-import Control.Exception (throwIO)
-import Data.Semigroup ((<>))
-import Network.HTTP.Req (MonadHttp (..))
-import Options.Applicative
-import qualified Data.Text as T
-import qualified Data.Text.IO as T
+import           Control.Exception
+import           Data.Semigroup
+import qualified Data.Text                 as T
+import qualified Data.Text.IO              as T
+import           Network.HTTP.Req          (MonadHttp (..))
+import           Options.Applicative
 
-import Console.GitHubStats
-import Console.GitHubStats.Stats
+import           Console.GitHubStats
+import           Console.GitHubStats.Stats
 
 data Options =
   Options { optOrganization :: String  -- ^ GitHub organization name
@@ -34,7 +34,8 @@ instance MonadHttp IO where
 main :: IO ()
 main = do
   Options{..} <- execParser opts
-  repos <- fetchRepos (T.pack optOrganization)
+  repos       <- fetchRepos (T.pack optOrganization)
+
   mapM_ T.putStrLn $ histogram repos
   where
     opts = info (helper <*> options)

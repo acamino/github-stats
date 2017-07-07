@@ -1,11 +1,11 @@
 {-# LANGUAGE OverloadedStrings #-}
 
-module Console.GitHubStats.StatsSpec (spec) where
+module Console.GitHubStats.StatsSpec where
 
-import Test.Hspec (Spec, it, describe, shouldBe)
+import           Test.Hspec
 
-import Console.GitHubStats.Stats (histogram)
-import Console.GitHubStats.Types
+import           Console.GitHubStats.Stats
+import           Console.GitHubStats.Types
 
 spec :: Spec
 spec =
@@ -30,4 +30,3 @@ spec =
             , Repository { repoLanguage = Just "Haskell" }
             ]
       histogram repos `shouldBe` [ "## Haskell 2" ]
-
