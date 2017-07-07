@@ -49,7 +49,7 @@ fetchReposByPage orgName page = do
   let listReposUrl = gitHubApi /: "orgs" /: orgName /: "repos"
       params = "per_page" =: perPage <>
                "page" =: page <>
-               header "User-Agent" "ghs"
+               header "User-Agent" "github-stats"
   repos <- req GET listReposUrl NoReqBody jsonResponse params
   return (responseBody repos :: [Repository])
 
@@ -58,7 +58,7 @@ fetchNumberOfRepos :: MonadHttp m
   -> m Integer
 fetchNumberOfRepos orgName = do
   let listReposUrl = gitHubApi /: "orgs" /: orgName
-      params       = header "User-Agent" "ghs"
+      params       = header "User-Agent" "github-stats"
   repos <- req GET listReposUrl NoReqBody jsonResponse params
   let organization = responseBody repos :: Organization
   return $ fromMaybe 0 $ orgPublicRepos organization

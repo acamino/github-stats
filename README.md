@@ -6,7 +6,7 @@
 </a>
 
 # GitHub Stats
-[![Build Status](https://travis-ci.org/acamino/ghs.svg?branch=master)](https://travis-ci.org/acamino/ghs)
+[![Build Status](https://travis-ci.org/acamino/github-stats.svg?branch=master)](https://travis-ci.org/acamino/github-stats)
 
 This is a pet project to get some stats from GitHub repositories.
 
@@ -15,8 +15,8 @@ This is a pet project to get some stats from GitHub repositories.
 1. First clone this repository and `cd` into it.
 
    ```bash
-   $ git clone git://github.com/acamino/ghs.git
-   $ cd ghs
+   $ git clone git://github.com/acamino/github-stats.git
+   $ cd github-stats
    ```
 
 1. Install [Stack](https://docs.haskellstack.org/en/stable/README/).
