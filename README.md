@@ -8,7 +8,33 @@
 # GitHub Stats
 [![Build Status](https://travis-ci.org/acamino/github-stats.svg?branch=master)](https://travis-ci.org/acamino/github-stats)
 
-This is a pet project to get some stats from GitHub repositories.
+GitHub Stats is a side project which motivation was to learn how to use the [req
+package](https://hackage.haskell.org/package/req) by Mark Karpov. It implements
+a command line utility to make it easier to use.
+
+To get simple stats from any GitHub organization you should run:
+
+```bash
+$ stack exec -- github-stats -o stackbuilders
+```
+
+The stats produced will have a histogram format. They will look like the
+upcoming example:
+
+```bash
+#################################################### Haskell 52
+#################### Ruby 20
+######### TeX 9
+######## JavaScript 8
+## Agda 2
+## CoffeeScript 2
+## HTML 2
+## Shell 2
+## TypeScript 2
+# ATS 1
+# Elm 1
+# PHP 1
+```
 
 ## Local Development
 
@@ -30,7 +56,7 @@ This is a pet project to get some stats from GitHub repositories.
 1. If you want to launch a REPL and have fun with this program.
 
    ```bash
-   $ stack ghci
+   $ stack repl
    ```
 
 ## Licence
