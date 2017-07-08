@@ -8,14 +8,14 @@ module Console.GitHubStats
 import           Control.Monad
 import           Data.Maybe
 import           Data.Monoid
-import qualified Data.Text                 as T
+import           Data.Text                 (Text)
 import           Network.HTTP.Req
 import           Numeric.Natural
 
 import           Console.GitHubStats.Types
 
 fetchRepos :: MonadHttp m
-  => T.Text            -- ^ Github organization name
+  => Text              -- ^ Github organization name
   -> m [Repository]
 fetchRepos orgName = do
   numberOfRepos <- fetchNumberOfRepos orgName
@@ -23,12 +23,13 @@ fetchRepos orgName = do
   repos <- forM [1..pages] $ fetchReposByPage orgName
   return $ concat repos
   where
-    countPages numberOfRepos = ceiling $ toFloat numberOfRepos / toFloat perPage
+    countPages numberOfRepos =
+      ceiling $ toFloat numberOfRepos / toFloat perPage
     toFloat = fromIntegral :: (Natural -> Float)
 
 
 fetchReposByPage :: MonadHttp m
-  => T.Text
+  => Text
   -> Natural
   -> m [Repository]
 fetchReposByPage orgName page = do
@@ -41,7 +42,7 @@ fetchReposByPage orgName page = do
 
 
 fetchNumberOfRepos :: MonadHttp m
-  => T.Text
+  => Text
   -> m Natural
 fetchNumberOfRepos orgName = do
   let listReposUrl = gitHubApiUrl /: "orgs" /: orgName

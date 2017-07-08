@@ -6,11 +6,12 @@ import           Control.Arrow
 import           Data.List
 import           Data.Maybe
 import           Data.Ord
+import           Data.Text                 (Text)
 import qualified Data.Text                 as T
 
 import           Console.GitHubStats.Types
 
-histogram :: [Repository] -> [T.Text]
+histogram :: [Repository] -> [Text]
 histogram repos = fmap renderBar stats
   where
     renderBar (language, quantity) =

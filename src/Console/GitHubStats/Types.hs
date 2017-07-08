@@ -4,15 +4,14 @@
 module Console.GitHubStats.Types where
 
 import           Data.Aeson
-import qualified Data.Text       as T
+import           Data.Text       (Text)
 import           Numeric.Natural
 
-type Language = T.Text
+type Language = Text
 
 data Repository = Repository
   { repoLanguage :: Maybe Language
-  }
-  deriving (Eq, Show)
+  } deriving (Eq, Show)
 
 instance FromJSON Repository where
   parseJSON = withObject "repo in org" $ \o -> do
@@ -21,10 +20,9 @@ instance FromJSON Repository where
 
 data Organization = Organization
   { orgPublicRepos :: Maybe Natural
-  }
-  deriving (Eq, Show)
+  } deriving (Eq, Show)
 
 instance FromJSON Organization where
-  parseJSON = withObject "organization" $ \o -> do
+  parseJSON = withObject "Organization" $ \o -> do
     orgPublicRepos <- o .: "public_repos"
     return Organization{..}
