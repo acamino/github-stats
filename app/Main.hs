@@ -5,6 +5,7 @@
 module Main (main) where
 
 import           Control.Exception
+import           Control.Monad
 import           Data.Semigroup
 import qualified Data.Text                 as T
 import qualified Data.Text.IO              as T
@@ -33,10 +34,10 @@ instance MonadHttp IO where
 
 main :: IO ()
 main = do
-  Options{..} <- execParser opts
-  repos       <- fetchRepos (T.pack optOrganization)
+  Options {..} <- execParser opts
+  repos        <- mkHistogram <$> fetchRepos (T.pack optOrganization)
 
-  mapM_ T.putStrLn $ histogram repos
+  forM_ repos T.putStrLn
   where
     opts = info (helper <*> options)
       ( fullDesc

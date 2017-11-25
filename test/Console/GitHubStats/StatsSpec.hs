@@ -9,7 +9,7 @@ import           Console.GitHubStats.Types
 
 spec :: Spec
 spec =
-  describe "histogram" $ do
+  describe "mkHistogram" $ do
     it "sorts languages in ascending order" $ do
       let repos =
             [ Repository { repoLanguage = Just "PureScript" }
@@ -19,14 +19,17 @@ spec =
             , Repository { repoLanguage = Just "Ruby" }
             , Repository { repoLanguage = Just "Haskell" }
             ]
-      histogram repos `shouldBe` [ "### Haskell 3"
-                                 , "## Ruby 2"
-                                 , "# PureScript 1"
-                                 ]
+      shouldBe
+        (mkHistogram repos)
+        [ "### Haskell 3"
+        , "## Ruby 2"
+        , "# PureScript 1"
+        ]
+
     it "discards repositories without a language" $ do
       let repos =
             [ Repository { repoLanguage = Nothing }
             , Repository { repoLanguage = Just "Haskell" }
             , Repository { repoLanguage = Just "Haskell" }
             ]
-      histogram repos `shouldBe` [ "## Haskell 2" ]
+      mkHistogram repos `shouldBe` [ "## Haskell 2" ]
