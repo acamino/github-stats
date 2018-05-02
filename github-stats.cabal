@@ -51,6 +51,7 @@ test-suite github-stats-test
   type:                exitcode-stdio-1.0
   hs-source-dirs:      test
   other-modules:       Console.GitHubStats.StatsSpec
+                       Console.GitHubStatsSpec
 
   build-depends:       base                   >= 4.7   && < 5.0
                      , aeson                  >= 0.9   && < 1.1

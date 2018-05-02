@@ -20,7 +20,7 @@ fetchRepos :: MonadHttp m
 fetchRepos orgName = do
   numberOfRepos <- fetchNumberOfRepos orgName
   let pages = countPages numberOfRepos
-  repos <- forM [1..pages] $ fetchReposByPage orgName
+  repos <- forM [1..pages] (fetchReposByPage orgName)
   return $ concat repos
   where
     countPages numberOfRepos =

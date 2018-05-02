@@ -14,15 +14,13 @@ data Repository = Repository
   } deriving (Eq, Show)
 
 instance FromJSON Repository where
-  parseJSON = withObject "repo in org" $ \o -> do
-    repoLanguage <- o .: "language"
-    return Repository{..}
+  parseJSON = withObject "Repository" $ \o ->
+    Repository <$> o .: "language"
 
 data Organization = Organization
   { orgPublicRepos :: Maybe Natural
   } deriving (Eq, Show)
 
 instance FromJSON Organization where
-  parseJSON = withObject "Organization" $ \o -> do
-    orgPublicRepos <- o .: "public_repos"
-    return Organization{..}
+  parseJSON = withObject "Organization" $ \o ->
+    Organization <$> o .: "public_repos"

@@ -11,8 +11,8 @@ import qualified Data.Text                 as T
 
 import           Console.GitHubStats.Types
 
-histogram :: [Repository] -> [Text]
-histogram repos = fmap renderBar stats
+mkHistogram :: [Repository] -> [Text]
+mkHistogram = map renderBar . mkStats . groupLangs
   where
     renderBar (language, quantity) =
       T.unwords [ T.replicate quantity "#"
@@ -20,7 +20,5 @@ histogram repos = fmap renderBar stats
                 , T.pack (show quantity)
                 ]
 
-    stats = toStats . groupLangs $ repos
-
-    toStats    = sortBy (comparing $ Down . snd) . fmap (head &&& length)
+    mkStats    = sortBy (comparing $ Down . snd) . map (head &&& length)
     groupLangs = group . sort . mapMaybe repoLanguage
