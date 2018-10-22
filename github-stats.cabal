@@ -2,7 +2,6 @@ name:                github-stats
 version:             0.0.1.0
 synopsis:            Fetch stats form GitHub organization
 description:         Please see README.md
-homepage:            https://github.com/acamino/github-stats#readme
 license:             BSD3
 license-file:        LICENSE
 author:              Agustin Camino <agustin.camino@gmail.com>
@@ -26,8 +25,8 @@ library
                      , Console.GitHubStats.Stats
                      , Console.GitHubStats.Types
   build-depends:       base                   >= 4.7   && < 5.0
-                     , aeson                  >= 0.9   && < 1.1
-                     , req                    >= 0.2   && < 0.3
+                     , aeson                  >= 0.9   && < 1.4
+                     , req                    >= 0.2   && < 1.2
                      , text                   >= 1.2   && < 1.3
 
   ghc-options:         -Wall -Werror
@@ -37,10 +36,10 @@ executable github-stats
   hs-source-dirs:      app
   main-is:             Main.hs
   build-depends:       base                   >= 4.7   && < 5.0
-                     , aeson                  >= 0.9   && < 1.1
+                     , aeson                  >= 0.9   && < 1.4
                      , github-stats
-                     , optparse-applicative   >= 0.11  && < 0.14
-                     , req                    >= 0.2   && < 0.3
+                     , optparse-applicative   >= 0.11  && < 0.15
+                     , req                    >= 0.2   && < 1.2
                      , text                   >= 1.2   && < 1.3
 
   ghc-options:         -Wall -Werror
@@ -54,11 +53,11 @@ test-suite github-stats-test
                        Console.GitHubStatsSpec
 
   build-depends:       base                   >= 4.7   && < 5.0
-                     , aeson                  >= 0.9   && < 1.1
+                     , aeson                  >= 0.9   && < 1.4
                      , github-stats
                      , hspec
-                     , optparse-applicative   >= 0.11  && < 0.14
-                     , req                    >= 0.2   && < 0.3
+                     , optparse-applicative   >= 0.11  && < 0.15
+                     , req                    >= 0.2   && < 1.2
                      , text                   >= 1.2   && < 1.3
 
   ghc-options:         -Wall -Werror
