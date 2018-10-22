@@ -7,7 +7,6 @@ module Console.GitHubStats
 
 import           Control.Monad
 import           Data.Maybe
-import           Data.Monoid
 import           Data.Text                 (Text)
 import           Network.HTTP.Req
 import           Numeric.Natural
